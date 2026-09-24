@@ -639,6 +639,12 @@ class unyt_array(np.ndarray):
             else:
                 ret.units = Unit(input_units, registry=registry)
             ret.name = name
+
+            # If a dtype is passed that is different from the input_array's
+            # dtype, we need to cast the array to the new dtype
+            if dtype is not None and dtype != input_array.dtype:
+                ret = ret.astype(dtype)
+
             return ret
         elif isinstance(input_array, np.ndarray):
             pass
